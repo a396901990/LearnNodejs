@@ -2,8 +2,17 @@
   <head>
   </head>
   <body>
-    <h1>Welcome <%= person %></h1>
-    <p><strong>Age:</strong><%= data.age %></p>
-    <p><strong>Job:</strong><%= data.job %></p>
+    <h1>Contact</h1>
+    <p><%= qs.name %></p>
+    <p><%= qs.age %></p>
+    <form id="contact-form" method="POST" action="/contact">
+      <label for="who">Who do you want to</label>
+      <input type="text" name="who" value="<%= qs.name %>">
+      <label for="email">Your email</label>
+      <input type="emial" name="email" value="<%= qs.email %>"/>
+      <input type="submit" value="submit"/>
+    </form>
   </body>
+
+
 </html>

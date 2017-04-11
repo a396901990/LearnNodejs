@@ -1,4 +1,3 @@
-const data = [{item:"get milk"}, {item:"walk dog"}, {item:"coding"}]
 const bodyParser = require('body-parser');
 const urlParser = bodyParser.urlencoded({extended : false});
 const mongoose = require('mongoose');
@@ -12,35 +11,35 @@ var todoScheam = new mongoose.Schema({
 });
 
 var Todo = mongoose.model('Todo', todoScheam);
-var itemOne = Todo({item: 'get car'}).save((err)=>{
-  if (err) throw err;
-  console.log('item saved');
-})
+// var itemOne = Todo({item: 'get car'}).save((err)=>{
+//   if (err) throw err;
+//   console.log('item saved');
+// })
 
 module.exports = (app) => {
 
 app.get('/todo', (req, res)=> {
-  res.render("todo", {todos : data});
+  // get data from mLab and pass it to view
+  Todo.find({}, (err, data) => {
+    if (err) throw err;
+    res.render("todo", {todos : data});
+  });
+
 })
 
 app.post('/todo', urlParser, (req, res)=> {
-  data.push(req.body);
-  res.json(data);
+  Todo(req.body).save((err, data) => {
+    if (err) throw err;
+    res.json(data);
+  });
 })
 
 app.delete('/todo/:item', (req, res)=> {
-
-  data = data.filter(function(todo){
-    console.log(req.params.item);
-    console.log(todo.item.replace(/ /g, '-'));
-    return todo.item.replace(/ /g, '-') !== req.params.item;
+  console.log(req.params.item.replace(/\-/g, ""));
+  Todo.find({item: req.params.item.replace(/\-/g, "")}).remove((err, data) => {
+    if (err) throw err;
+    res.json(data);
   });
-  console.log(data);
-  res.json(data);
-})
-
-app.get('/todo', (req, res)=> {
-
 })
 
 }

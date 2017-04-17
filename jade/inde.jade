@@ -1,8 +1,22 @@
 doctype html
 html
   head
-    title test from dean
+    - var nn = 'heihei';
+    - var people = {name : 'dean', age : 26, height : 180};
+    title #{name} #{nn.toUpperCase()} test from dean
   body 
+    h2 转义
+    - var index = 10;
+    each value, key in people
+      if index != 10
+        p #{key}
+      else 
+        p #{value} #{people.size}
+      
+    - var data = "text"
+    - var htmlData = "<script>alert(1);</script>"
+    p #{data}
+    p !{htmlData}
     h1.title#title this is test body
       a(href="www.baidu.com", title="baidu", data-uid="1000") baidu
     input.test#test_input(name="test")

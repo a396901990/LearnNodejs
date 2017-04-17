@@ -15,7 +15,13 @@ app.use(bodyParser.json());
 // initialize routes
 app.use('/api', require('./routes/api'));
 
-// listen for requests
-app.listen(process.env.port || 4000, function(){
-    console.log('now listening for requests');
+// error handling middleware
+app.use((err, req, res, next) => {
+  // console.log(err);
+  res.status(422).send({error : err.message});
+})
+
+// listen to port
+app.listen(3000, "localhost", ()=> {
+  console.log('you are listening to prot 3000');
 });
